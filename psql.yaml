@@ -1,0 +1,28 @@
+# Use postgres/example user/password credentials
+version: "3.7"
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: capstone
+    ports:
+      - 5432:5432
+    volumes:
+      - capstone_db:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  capstone_db:
+    name: capstone_db
+
+networks:
+  capstone_network:
+    name: capstone_network

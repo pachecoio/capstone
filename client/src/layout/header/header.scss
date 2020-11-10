@@ -1,0 +1,16 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 10rem;
+
+  &__wrapper {
+    width: calc(100vw - 25rem);
+    margin-left: 25rem;
+    padding: 2rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}

@@ -1,9 +1,10 @@
 .layout {
   display: grid;
   grid-template-columns: 25rem 1fr;
+  grid-template-rows: 10rem 1fr;
 
   .main {
-    grid-row: 1 / -1;
+    grid-row: 2 / -1;
     grid-column: 2 / 4;
   }
 }

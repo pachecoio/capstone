@@ -90,6 +90,12 @@ export const useAuth0 = ({
                 });
                 this.decodedToken = VueJwtDecode.decode(this.token);
                 this.permissions = this.decodedToken.permissions;
+            },
+            hasPermissions(permissions) {
+                for (const permission of permissions) {
+                    if (!this.permissions.includes(permission)) return false;
+                }
+                return true;
             }
         },
         /** Use this lifecycle method to instantiate the SDK client */

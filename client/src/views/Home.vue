@@ -32,7 +32,7 @@ export default {
   created() {
     console.log("decoded token", this.$auth.decodedToken);
   },
-  methods: {
+  methods: { 
     // Log the user in
     login() {
       this.$auth.loginWithRedirect();
@@ -44,12 +44,9 @@ export default {
       });
     },
     async logToken() {
-      console.log("log token");
-      const token = await this.$auth.getTokenSilently({
-        audience: process.env.VUE_APP_AUDIENCE,
-        scope: "get:users"
-      });
-      console.log("token found", token);
+      console.log("check if has permission to get users");
+      let hasPermission = this.$auth.hasPermissions(["post:users"]);
+      console.log("has permission", hasPermission);
     }
   }
 };

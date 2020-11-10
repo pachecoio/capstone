@@ -1,0 +1,9 @@
+.layout {
+  display: grid;
+  grid-template-columns: 25rem 1fr;
+
+  .main {
+    grid-row: 1 / -1;
+    grid-column: 2 / 4;
+  }
+}

@@ -1,0 +1,33 @@
+// Media Queries
+
+$screen-xs-min: 480px;
+$screen-xs-max: ($screen-xs-min - 1);
+$screen-sm-min: 768px;
+$screen-sm-max: ($screen-sm-min - 1);
+$screen-md-min: 992px;
+$screen-md-max: ($screen-md-min - 1);
+$screen-lg-min: 1200px;
+
+@mixin mq($media) {
+ @if $media == xs {
+   @media (max-width: $screen-sm-max) {@content;}
+ }
+ @else if $media == sm {
+   @media (min-width: $screen-sm-min) {@content;}
+ }
+ @else if $media == only-sm {
+   @media (min-width: $screen-sm-min) and (max-width: $screen-md-min) {@content;}
+ }
+ @else if $media == md {
+   @media (min-width: $screen-md-min) {@content;}
+ }
+ @else if $media == only-md {
+   @media (min-width: $screen-md-min) and (max-width: $screen-lg-min) {@content;}
+ }
+ @else if $media == lg {
+   @media (min-width: $screen-lg-min) {@content;}
+ }
+ @else {
+   @media (min-width: $media) { @content; }
+ }
+}

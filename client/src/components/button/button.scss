@@ -1,0 +1,18 @@
+.btn {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  font-size: 1.6rem;
+  cursor: pointer;
+
+  &--primary {
+  }
+
+  &--highlight {
+    background-color: var(--color-green);
+    color: var(--color-white);
+    font-weight: bold;
+  }
+}

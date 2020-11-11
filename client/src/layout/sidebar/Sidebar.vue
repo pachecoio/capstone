@@ -18,7 +18,7 @@
       <div class="sidebar__body">
         <ul class="sidebar__options">
           <li class="sidebar__option option">
-            <router-link to="/" class="option__link">
+            <router-link to="/dashboard" class="option__link">
               <DashboardIcon class="icon" />
               <span>Dashboard</span>
             </router-link>
@@ -76,6 +76,11 @@ export default {
       this.$auth.logout({
         returnTo: window.location.origin,
       });
+    },
+  },
+  watch: {
+    $route(to) {
+      this.displayActions = false;
     },
   },
 };

@@ -1,7 +1,5 @@
 :root {
   --color-primary: #242544;
-  --color-primary-light: #fafbfc;
-  --color-primary-dark: #78849e;
   --color-highlight: #ff787f;
   --color-highlight-dark: #ff6cc0;
   --color-highlight-dark-rgba: rgba(47, 52, 62, 0.8);
@@ -9,6 +7,7 @@
   --color-gray-light: #a3a5b0;
   --color-border: #707070;
   --color-white: #ffffff;
+  --color-background: #f8f7ff;
 }
 
 *,
@@ -25,6 +24,7 @@ html {
 
 body {
   font-family: Nunito, sans-serif;
+  background-color: var(--color-background);
 }
 
 a {

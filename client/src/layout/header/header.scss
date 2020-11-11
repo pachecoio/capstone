@@ -8,9 +8,13 @@
   &__wrapper {
     width: calc(100vw - 25rem);
     margin-left: 25rem;
-    padding: 2rem;
+    padding: 2rem 0;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
+  }
+
+  .input__wrapper {
+    margin-right: 2rem;
   }
 }

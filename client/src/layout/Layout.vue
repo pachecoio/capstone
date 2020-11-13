@@ -1,7 +1,8 @@
 <template>
   <div class="layout">
-    <Header v-if="$auth.isAuthenticated" />
-    <Sidebar v-if="$auth.isAuthenticated" />
+    <Loading v-if="$auth.loading" />
+    <Header />
+    <Sidebar />
     <main class="main">
       <slot />
     </main>
@@ -11,10 +12,12 @@
 import "./layout.scss";
 import Sidebar from "./sidebar";
 import Header from "./header";
+import Loading from "@/components/loading";
 export default {
   components: {
     Sidebar,
     Header,
+    Loading,
   },
 };
 </script>

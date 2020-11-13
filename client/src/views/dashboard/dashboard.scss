@@ -1,0 +1,63 @@
+.dashboard {
+  padding-right: 2rem;
+  padding-left: 1rem;
+
+  .card {
+    padding: 4rem 2rem;
+  }
+
+  .section {
+    // padding: 2rem 0;
+    h2 {
+      padding: 2rem;
+    }
+  }
+
+  &__welcome {
+    position: relative;
+    height: 10rem;
+    padding: 0;
+
+    .content {
+      z-index: 2;
+      &__title {
+        font-size: 2.5rem;
+        font-weight: bold;
+      }
+
+      &__text {
+        font-size: 1.8rem;
+        color: var(--color-gray);
+        margin-bottom: 1rem;
+        span {
+          font-weight: bold;
+          color: var(--color-green);
+        }
+      }
+
+      &__image {
+        height: 20rem;
+        position: absolute;
+        top: 0%;
+        right: 6rem;
+      }
+
+      .btn {
+      }
+    }
+  }
+
+  .section__tasks {
+    position: relative;
+    padding: 2rem 0;
+  }
+
+  &__tasks {
+    display: flex;
+    overflow-x: scroll;
+
+    .task {
+      margin: 1rem;
+    }
+  }
+}

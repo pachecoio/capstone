@@ -16,15 +16,14 @@ export const getFormattedDate = (date) => {
 export const getFormattedTime = (date) => {
   const d = new Date(date);
   const hours = d.getHours();
-  const minutes = d.getMinutes();
+  const minutes = d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes();
   return `${hours}:${minutes}`;
 };
 
 export const getShortDateTime = (date) => {
+  const today = new Date();
   const d = new Date(date);
   const time = getFormattedTime(date);
-  const today = new Date();
-  let rst = ``;
   if (
     d.getDate() == today.getDate() &&
     d.getMonth() === today.getMonth() &&

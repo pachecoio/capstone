@@ -53,4 +53,8 @@ ul {
 .icon {
   width: 2rem;
   height: 2rem;
+  path {
+    fill: var(--color-gray-light);
+    stroke: var(--color-gray-light);
+  }
 }

@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template
 from flask_cors import CORS
 from api.models import setup_db
+from requests import request
 
 
 def create_app(test_config=None):
@@ -15,6 +16,10 @@ def create_app(test_config=None):
     )
     setup_db(app)
     CORS(app)
+
+    @app.route("/api/login")
+    def login():
+        # Create auth with auth0
 
     @app.route("/", defaults={"path": ""})
     @app.route("/<path:path>")

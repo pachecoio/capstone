@@ -5,6 +5,7 @@
   width: 25rem;
   height: 100vh;
   display: flex;
+  z-index: 2;
 
   &__wrapper {
     margin: 1rem;
@@ -73,8 +74,10 @@
         color: var(--color-gray);
       }
       .icon {
-        fill: var(--color-gray);
-        stroke: var(--color-gray);
+        path {
+          fill: var(--color-gray);
+          stroke: var(--color-gray);
+        }
       }
     }
   }

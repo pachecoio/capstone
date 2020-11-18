@@ -84,13 +84,21 @@ export const useAuth0 = ({
         return this.auth0Client.logout(o);
       },
       async setToken() {
-        this.token = await this.$auth.getTokenSilently({
-          audience: process.env.VUE_APP_AUDIENCE,
-          scope: "get:users",
-        });
-        this.decodedToken = VueJwtDecode.decode(this.token);
-        this.permissions = this.decodedToken.permissions;
-        this.loading = false;
+        if (!this.isAuthenticated) {
+          this.loading = false;
+          return;
+        }
+        try {
+          this.token = await this.$auth.getTokenSilently({
+            audience: process.env.VUE_APP_AUDIENCE,
+            scope: "get:users",
+          });
+          this.decodedToken = VueJwtDecode.decode(this.token);
+          this.permissions = this.decodedToken.permissions;
+          this.loading = false;
+        } catch (error) {
+          console.log("not able to get token", error);
+        }
       },
       hasPermissions(permissions) {
         for (const permission of permissions) {

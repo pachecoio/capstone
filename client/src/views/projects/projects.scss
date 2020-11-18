@@ -1,0 +1,10 @@
+.projects {
+}
+
+.project {
+  margin-right: 2rem;
+  margin-bottom: 2rem;
+  &__list {
+    display: flex;
+  }
+}

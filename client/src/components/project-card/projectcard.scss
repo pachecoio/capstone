@@ -1,0 +1,88 @@
+.project {
+  min-width: 30rem;
+  padding: 0 !important;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem;
+  }
+
+  &__title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--color-primary);
+  }
+
+  &__status {
+    display: flex;
+    align-items: center;
+    &__label {
+      color: var(--color-gray);
+      font-size: 1.2rem;
+      text-transform: capitalize;
+      font-weight: bold;
+    }
+
+    &__icon {
+      width: 0.7rem;
+      height: 0.7rem;
+      background-color: var(--color-gray);
+      margin-left: 1rem;
+      border-radius: 100%;
+    }
+
+    &--new {
+      .project__status {
+        &__label {
+          color: var(--color-blue);
+        }
+        &__icon {
+          background-color: var(--color-blue);
+        }
+      }
+    }
+
+    &--progress {
+      .project__status {
+        &__label {
+          color: var(--color-orange);
+        }
+        &__icon {
+          background-color: var(--color-orange);
+        }
+      }
+    }
+
+    &--done {
+      .project__status {
+        &__label {
+          color: var(--color-green);
+        }
+        &__icon {
+          background-color: var(--color-green);
+        }
+      }
+    }
+  }
+
+  &__description {
+    font-size: 1.6rem;
+    color: var(--color-gray);
+    padding: 0 2rem;
+  }
+
+  &__footer {
+    border-top: 1px solid var(--color-gray-light);
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    .icon {
+      margin-right: 1rem;
+    }
+  }
+}

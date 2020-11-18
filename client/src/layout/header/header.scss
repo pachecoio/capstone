@@ -4,6 +4,7 @@
   left: 0;
   width: 100vw;
   height: 10rem;
+  z-index: 2;
 
   &__wrapper {
     width: calc(100vw - 25rem);

@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import Profile from "../views/Profile.vue";
 import Dashboard from "@/views/dashboard";
 import Search from "@/views/search";
+import Projects from "@/views/projects";
 
 import { authGuard } from "../auth/authGuard";
 
@@ -34,6 +35,12 @@ const routes = [
     path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
+    beforeEnter: authGuard,
+  },
+  {
+    path: "/projects",
+    name: "Projects",
+    component: Projects,
     beforeEnter: authGuard,
   },
   {

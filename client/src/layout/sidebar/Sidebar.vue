@@ -23,9 +23,19 @@
               <span>Dashboard</span>
             </router-link>
           </li>
+          <li class="sidebar__option option">
+            <router-link to="/projects" class="option__link">
+              <LayersIcon class="icon" />
+              <span>Projects</span>
+            </router-link>
+          </li>
         </ul>
       </div>
-      <div class="sidebar__footer user-profile" @click="showUserActions()">
+      <div
+        v-if="$auth.isAuthenticated"
+        class="sidebar__footer user-profile"
+        @click="showUserActions()"
+      >
         <div class="user-profile__image">
           <img :src="$auth.user.picture" alt="User avatar" />
         </div>
@@ -56,12 +66,14 @@ import DashboardIcon from "@/assets/icons/dashboard.svg";
 import ArrowDownIcon from "@/assets/icons/down-arrow.svg";
 import ProfileIcon from "@/assets/icons/profile.svg";
 import LogoutIcon from "@/assets/icons/logout.svg";
+import LayersIcon from "@/assets/icons/layers.svg";
 export default {
   components: {
     DashboardIcon,
     ArrowDownIcon,
     ProfileIcon,
     LogoutIcon,
+    LayersIcon,
   },
   data() {
     return {

@@ -1,6 +1,7 @@
 import Vue from "vue";
 import createAuth0Client from "@auth0/auth0-spa-js";
 import VueJwtDecode from "vue-jwt-decode";
+import { getAxiosInstance } from "./../services";
 
 /** Define a default action to perform after authentication */
 const DEFAULT_REDIRECT_CALLBACK = () =>
@@ -94,6 +95,15 @@ export const useAuth0 = ({
             scope: "get:users",
           });
           console.log("token found", this.token);
+          const axios = getAxiosInstance(this.token);
+          const res = await axios.post(`/api/user/login`, {
+            name: this.user.name,
+            email: this.user.email,
+          });
+          if (res.status === 201) {
+            this.user.id = res.data.data.id;
+          }
+          console.log("current user", this.user);
           this.decodedToken = VueJwtDecode.decode(this.token);
           this.permissions = this.decodedToken.permissions;
           this.loading = false;

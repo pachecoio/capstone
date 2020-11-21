@@ -1,18 +1,18 @@
 <template>
   <div class="page projects">
-    <h1>Projects</h1>
+    <h1 class="projects__title">Projects</h1>
     <div class="project__list">
       <ProjectCard
         v-for="project in projects"
         :key="project.id"
         :project="project"
+        @click="navigateToProject(project.id)"
       />
     </div>
   </div>
 </template>
 
 <script>
-import "./projects.scss";
 import ProjectCard from "@/components/project-card";
 export default {
   components: {
@@ -40,7 +40,17 @@ export default {
       ],
     };
   },
+  methods: {
+    navigateToProject(id) {
+      this.$router.push({
+        path: `projects/${id}`,
+      });
+    },
+  },
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+@import './projects';
+
+</style>></style>

@@ -93,6 +93,7 @@ export const useAuth0 = ({
             audience: process.env.VUE_APP_AUDIENCE,
             scope: "get:users",
           });
+          console.log("token found", this.token);
           this.decodedToken = VueJwtDecode.decode(this.token);
           this.permissions = this.decodedToken.permissions;
           this.loading = false;

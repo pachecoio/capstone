@@ -27,3 +27,24 @@ export const authGuard = async (to, from, next) => {
     }
   });
 };
+
+export const notAuthenticated = async (to, from, next) => {
+  const authService = getInstance();
+
+  const fn = () => {
+    // If the user is authenticated, show home/login page
+    if (!authService.isAuthenticated) {
+      return next();
+    }
+
+    // Otherwise, redirect to dashboard
+    next({ path: "/dashboard" });
+  };
+
+  // Watch for the loading property to change before we check isAuthenticated
+  authService.$watch("loading", (loading) => {
+    if (loading === false) {
+      return fn();
+    }
+  });
+};

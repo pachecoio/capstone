@@ -6,5 +6,10 @@
   .main {
     grid-row: 2 / -1;
     grid-column: 2 / 4;
+
+    &--fullscreen {
+      grid-row: 1 / -1;
+      grid-column: 1 / -1;
+    }
   }
 }

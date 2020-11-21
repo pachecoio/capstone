@@ -1,5 +1,6 @@
 from sqlalchemy import Column, String, Integer, create_engine
 from flask_sqlalchemy import SQLAlchemy
+from settings import DATABASE_PATH
 import json
 import os
 
@@ -18,33 +19,18 @@ setup_db(app)
 
 
 def setup_db(app, database_path=database_path):
-    app.config["SQLALCHEMY_DATABASE_URI"] = database_path
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_path or DATABASE_PATH
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
     db.create_all()
 
-
-"""
-Person
-Have title and release year
-"""
+    return db
 
 
-class Person(db.Model):
-    __tablename__ = "people"
+class User(db.Model):
+    __tablename__ = "users"
 
     id = Column(Integer, primary_key=True)
-    name = Column(String)
-    catchphrase = Column(String)
-
-    def __init__(self, name, catchphrase=""):
-        self.name = name
-        self.catchphrase = catchphrase
-
-    def format(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "catchphrase": self.catchphrase,
-        }
+    name = Column(String, nullable=False)
+    email = Column(String, unique=True, nullable=False)

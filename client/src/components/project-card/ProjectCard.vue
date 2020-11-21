@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import "./projectcard.scss";
 import Card from "@/components/card";
 import ClipboardIcon from "@/assets/icons/clipboard.svg";
 import { PROJECT_STATUSES } from "@/services/ProjectService";
@@ -52,4 +51,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+@import "./projectcard";
+</style>

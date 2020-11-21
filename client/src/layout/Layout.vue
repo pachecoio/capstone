@@ -1,9 +1,9 @@
 <template>
   <div class="layout">
     <Loading v-if="$auth.loading" />
-    <Header />
-    <Sidebar />
-    <main class="main">
+    <Header v-if="$auth.isAuthenticated" />
+    <Sidebar v-if="$auth.isAuthenticated" />
+    <main :class="['main', ...mainClasses]">
       <slot />
     </main>
   </div>
@@ -18,6 +18,12 @@ export default {
     Sidebar,
     Header,
     Loading,
+  },
+  computed: {
+    mainClasses() {
+      if (!this.$auth.isAuthenticated) return ["main--fullscreen"];
+      return [];
+    },
   },
 };
 </script>

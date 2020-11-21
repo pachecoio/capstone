@@ -5,8 +5,9 @@ import Profile from "../views/Profile.vue";
 import Dashboard from "@/views/dashboard";
 import Search from "@/views/search";
 import Projects from "@/views/projects";
+import Project from "@/views/project";
 
-import { authGuard } from "../auth/authGuard";
+import { authGuard, notAuthenticated } from "../auth/authGuard";
 
 Vue.use(VueRouter);
 
@@ -15,15 +16,7 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    beforeEnter: notAuthenticated,
   },
   {
     path: "/profile",
@@ -41,6 +34,12 @@ const routes = [
     path: "/projects",
     name: "Projects",
     component: Projects,
+    beforeEnter: authGuard,
+  },
+  {
+    path: "/projects/:id",
+    name: "Project/:id",
+    component: Project,
     beforeEnter: authGuard,
   },
   {

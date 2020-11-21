@@ -96,11 +96,12 @@ export const useAuth0 = ({
           });
           console.log("token found", this.token);
           const axios = getAxiosInstance(this.token);
-          const res = await axios.post(`/api/user/login`, {
+          const res = await axios.patch(`/api/user`, {
             name: this.user.name,
             email: this.user.email,
+            picture: this.user.picture,
           });
-          if (res.status === 201) {
+          if (res.status === 200 || res.status === 201) {
             this.user.id = res.data.data.id;
           }
           console.log("current user", this.user);

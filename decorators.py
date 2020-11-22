@@ -87,7 +87,12 @@ def parse_request(arguments):
             data = dict(**kwargs)
             params = request.args
             for argument in arguments:
-                if params.get(argument.name):
+                if argument.append:
+                    data[argument.name] = [
+                        argument.type(param)
+                        for param in params.getlist(argument.name) or []
+                    ]
+                elif params.get(argument.name):
                     data[argument.name] = argument.type(
                         params.get(argument.name)
                     )
@@ -112,13 +117,10 @@ def parse_request(arguments):
 
 class Argument(object):
     def __init__(
-        self,
-        name,
-        default=None,
-        type=str,
-        required=False,
+        self, name, default=None, type=str, required=False, append=False
     ):
         self.name = name
         self.default = default
         self.type = type
         self.required = required
+        self.append = append

@@ -76,3 +76,12 @@ class TaskUpdateSchema(Schema):
     name = fields.String()
     description = fields.String()
     updated_at = fields.DateTime(default=datetime.now())
+
+
+class UserProjectSchema(Schema):
+    project = fields.Nested(ProjectSchema)
+    user = fields.Nested(UserSchema)
+    status = fields.String()
+    created_at = fields.DateTime()
+    updated_at = fields.DateTime()
+    created_by = fields.Integer()

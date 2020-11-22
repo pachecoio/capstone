@@ -2,7 +2,8 @@ from flask import Blueprint, jsonify
 from api.repositories.user_repository import UserRepository
 from api.repositories.project_repository import ProjectRepository
 from api.repositories.task_repository import TaskRepository
-from decorators import marshal_with, parse_with
+from api.repositories.user_project_repository import UserProjectRepository
+from decorators import marshal_with, parse_with, parse_request, Argument
 from api.schemas import (
     UserSchema,
     UserCreateSchema,
@@ -12,9 +13,10 @@ from api.schemas import (
     TaskSchema,
     TaskCreateSchema,
     TaskUpdateSchema,
+    UserProjectSchema,
 )
 from auth import requires_auth
-from api.models import User
+from api.models import User, UserProject, UserProjectStatusEnum
 from datetime import datetime
 
 blueprint = Blueprint("api_blueprint", __name__)
@@ -23,6 +25,7 @@ blueprint = Blueprint("api_blueprint", __name__)
 user_repository = UserRepository()
 project_repository = ProjectRepository()
 task_repository = TaskRepository()
+user_project_repository = UserProjectRepository()
 
 
 # Users
@@ -80,10 +83,17 @@ def delete_user(payload, id):
 
 @blueprint.route("/api/project", methods=["GET"])
 @requires_auth(permission="get:users")
+@parse_request(
+    [
+        Argument(name="status"),
+        Argument(name="project_id", type=int, append=True),
+        Argument(name="user_id", type=int, append=True),
+        Argument(name="created_by", type=int, append=True),
+    ]
+)
 @marshal_with(ProjectSchema(many=True))
 def get_projects(*args, **kwargs):
-    projects = project_repository.query.all()
-    return projects
+    return project_repository.filter(**kwargs)
 
 
 @blueprint.route("/api/project", methods=["POST"])
@@ -140,3 +150,35 @@ def create_task(entity, payload):
 @marshal_with(TaskSchema())
 def update_task(entity, payload, id):
     return task_repository.update(id, updated_at=datetime.now(), **entity)
+
+
+# User projects
+
+
+@blueprint.route("/api/project/subscriptions", methods=["GET"])
+@requires_auth(permission="get:users")
+@parse_request(
+    [
+        Argument(name="status"),
+        Argument(name="user_id", type=int),
+        Argument(name="project_id", type=int),
+        Argument(name="created_by", type=int),
+    ]
+)
+@marshal_with(UserProjectSchema(many=True))
+def get_projects_subscriptions(*args, **kwargs):
+    return user_project_repository.filter(**kwargs)
+
+
+@blueprint.route("/api/user/<int:user_id>/projects", methods=["GET"])
+@requires_auth(permission="get:users")
+@parse_request(
+    [
+        Argument(name="status"),
+        Argument(name="project_id", type=int, append=True),
+        Argument(name="created_by", type=int, append=True),
+    ]
+)
+@marshal_with(ProjectSchema(many=True))
+def get_user_projects(*args, user_id, **kwargs):
+    return project_repository.filter(user_id=user_id, **kwargs)

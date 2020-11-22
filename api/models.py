@@ -66,7 +66,7 @@ class UserProject(db.Model, TimestampMixin):
     )
     project = relationship("Project", back_populates="users")
     user = relationship("User", back_populates="projects")
-    status = Column(Enum(UserProjectStatusEnum))
+    status = Column(String, nullable=False)
 
 
 class User(db.Model):

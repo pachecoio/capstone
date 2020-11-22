@@ -6,6 +6,7 @@ from sqlalchemy import (
     DateTime,
     ForeignKey,
     Table,
+    Enum,
 )
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
@@ -14,6 +15,7 @@ from settings import DATABASE_PATH
 import json
 import os
 from datetime import datetime
+import enum
 
 database_name = "capstone"
 database_path = os.environ.get(
@@ -39,10 +41,16 @@ def setup_db(app, database_path=database_path):
     return db
 
 
+class UserProjectStatusEnum(enum.Enum):
+    pending = 0
+    active = 1
+
+
 class TimestampMixin(object):
     created_at = Column(DateTime, default=datetime.now())
     updated_at = Column(DateTime, default=datetime.now())
     created_by = Column(Integer)
+    updated_by = Column(Integer)
 
 
 class UserProject(db.Model, TimestampMixin):
@@ -58,6 +66,7 @@ class UserProject(db.Model, TimestampMixin):
     )
     project = relationship("Project", back_populates="users")
     user = relationship("User", back_populates="projects")
+    status = Column(Enum(UserProjectStatusEnum))
 
 
 class User(db.Model):
@@ -80,7 +89,9 @@ class Task(db.Model, TimestampMixin):
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    project_id = Column(Integer, ForeignKey("projects.id"))
+    description = Column(String, nullable=False)
+    project_id = Column(Integer, ForeignKey("projects.id", ondelete="CASCADE"))
+    project = relationship("Project", back_populates="tasks")
 
 
 class Project(db.Model, TimestampMixin):

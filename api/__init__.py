@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify
 from api.repositories.user_repository import UserRepository
 from api.repositories.project_repository import ProjectRepository
+from api.repositories.task_repository import TaskRepository
 from decorators import marshal_with, parse_with
 from api.schemas import (
     UserSchema,
@@ -8,15 +9,20 @@ from api.schemas import (
     ProjectSchema,
     ProjectCreateSchema,
     ProjectUpdateSchema,
+    TaskSchema,
+    TaskCreateSchema,
+    TaskUpdateSchema,
 )
 from auth import requires_auth
 from api.models import User
+from datetime import datetime
 
 blueprint = Blueprint("api_blueprint", __name__)
 
 
 user_repository = UserRepository()
 project_repository = ProjectRepository()
+task_repository = TaskRepository()
 
 
 # Users
@@ -93,7 +99,7 @@ def create_project(entity, payload):
 @parse_with(ProjectUpdateSchema())
 @marshal_with(ProjectSchema())
 def update_project(entity, payload, id):
-    return project_repository.update(id, **entity)
+    return project_repository.update(id, updated_at=datetime.now(), **entity)
 
 
 @blueprint.route("/api/project/<int:id>", methods=["DELETE"])
@@ -107,3 +113,30 @@ def delete_project(payload, id):
             "deleted": 1,
         }
     )
+
+
+# Tasks
+
+
+@blueprint.route("/api/task", methods=["GET"])
+@requires_auth(permission="get:users")
+@marshal_with(TaskSchema(many=True))
+def get_tasks(*args, **kwargs):
+    tasks = task_repository.query.all()
+    return tasks
+
+
+@blueprint.route("/api/task", methods=["POST"])
+@requires_auth(permission="post:users")
+@parse_with(TaskCreateSchema())
+@marshal_with(TaskSchema())
+def create_task(entity, payload):
+    return task_repository.insert(**entity)
+
+
+@blueprint.route("/api/task/<int:id>", methods=["PUT"])
+@requires_auth(permission="PUT:users")
+@parse_with(TaskUpdateSchema())
+@marshal_with(TaskSchema())
+def update_task(entity, payload, id):
+    return task_repository.update(id, updated_at=datetime.now(), **entity)

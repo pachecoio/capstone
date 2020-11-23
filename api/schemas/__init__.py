@@ -8,12 +8,14 @@ class UserSchema(Schema):
     name = fields.String()
     email = fields.String()
     picture = fields.String()
+    role = fields.String()
 
 
 class UserCreateSchema(Schema):
     name = fields.String(required=True)
     email = fields.String(required=True)
     picture = fields.String()
+    role = fields.String()
 
 
 class ProjectSchema(Schema):

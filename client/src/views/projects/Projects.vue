@@ -14,6 +14,7 @@
 
 <script>
 import ProjectCard from "@/components/project-card";
+import { getAxiosInstance } from '@/services';
 export default {
   components: {
     ProjectCard,
@@ -41,6 +42,20 @@ export default {
     };
   },
   methods: {
+    async loadProjects() {
+      const axios = getAxiosInstance(
+        this.$auth.token
+      );
+      const params = {};
+      if(this.$auth.user.role === 'manager') {
+        params.created_by = this.$auth.user.id;
+      } else if (this.$auth.user.role === 'client') {
+        params.user_id = this.$auth.user.id;
+      }
+      const res = await axios.get(`/api/project`, {
+        params,
+      })
+    },
     navigateToProject(id) {
       this.$router.push({
         path: `projects/${id}`,

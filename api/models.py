@@ -82,6 +82,7 @@ class User(db.Model):
         cascade="all, delete",
         passive_deletes=True,
     )
+    role = Column(String)
 
 
 class Task(db.Model, TimestampMixin):

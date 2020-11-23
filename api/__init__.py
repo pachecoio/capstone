@@ -18,6 +18,7 @@ from api.schemas import (
 from auth import requires_auth
 from api.models import User, UserProject, UserProjectStatusEnum
 from datetime import datetime
+from error_handlers import ApiError
 
 blueprint = Blueprint("api_blueprint", __name__)
 
@@ -53,6 +54,8 @@ def create_user(entity, payload):
 def create_or_return_existing_user(entity, payload):
     user = user_repository.query.filter(User.email == entity["email"]).first()
     if user:
+        if user.role:
+            del entity["role"]
         return user_repository.update(id=user.id, **entity)
     return user_repository.insert(**entity)
 

@@ -90,6 +90,7 @@ export const useAuth0 = ({
           return;
         }
         try {
+          console.log("get token");
           this.token = await this.$auth.getTokenSilently({
             audience: process.env.VUE_APP_AUDIENCE,
             scope: "get:users",
@@ -100,9 +101,13 @@ export const useAuth0 = ({
             name: this.user.name,
             email: this.user.email,
             picture: this.user.picture,
+            role: window.location.href.includes("manager=true")
+              ? "manager"
+              : "client",
           });
           if (res.status === 200 || res.status === 201) {
             this.user.id = res.data.data.id;
+            this.user.role = res.data.data.role;
           }
           console.log("current user", this.user);
           this.decodedToken = VueJwtDecode.decode(this.token);
@@ -110,6 +115,7 @@ export const useAuth0 = ({
           this.loading = false;
         } catch (error) {
           console.log("not able to get token", error);
+          this.logout();
         }
       },
       hasPermissions(permissions) {

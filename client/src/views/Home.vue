@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <button @click="login">Log in</button>
+    <button @click="managerLogin">Log in as company</button>
   </div>
 </template>
 
@@ -22,6 +23,11 @@ export default {
     // Log the user in
     login() {
       this.$auth.loginWithRedirect();
+    },
+    managerLogin() {
+      this.$auth.loginWithRedirect({
+        redirect_uri: "http://localhost:8080?manager=true",
+      });
     },
   },
 };
